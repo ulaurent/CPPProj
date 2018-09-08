@@ -5,6 +5,9 @@ claculate pay based off employee type
 
 int main()
 {
+    std::cout<<"Enter your guess:\n";
+    std::cin>>numIn;
+
     const string status = "salary"; //options: hourly or salary
     string level;
     

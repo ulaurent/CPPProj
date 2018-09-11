@@ -1,42 +1,71 @@
-#include <iostream>
-#include <vector>
 
+#include "account.hpp"
 
+using namespace std; // Only use in cpp file where functions will be written
 
-class Account 
+Account::Account():balance(0) // Initialize balance variable to zero
 {
-    private:
-        double balance;
-        vector <int> transactions;
-    public:
-        double deposit (double depositIn);
-        double withdraw (double withdrawIn);
-        void report ();
-};
-
-Accout::Account
-{
-    balance = 0.0;
+    //balance = 0.0; // two ways to write it
     
-    for (int i = 0; i < 10; i++)
-        transactions[i] = 0;
-}
-
-double Account::deposit (double depositIn)
-{
-    balance += depositIn;
+    // Do not have to initialize vector log because its already an empty vector
     
-    return balance;
 }
 
-double Account::withdraw (double withdrawIn)
+
+vector<string> Account::Report()
 {
-    balance -= withdrawIn;
+    vector <string> report; // New vector type report within this function only, local variable
+    report.push_back("Balance is: " + to_string(balance)); //to_string turns the balance integer to vector report
+    report.push_back("Transactions: "); // Adds this sentence to the vector report;
     
-    return balance;
+    // A 'ranged for' since log is a vector
+    // For every 't' in that vector, call the report function
+    for(auto t:log)
+        {
+            report.push_back(t.Report()); // Report() function formats the type and amount of every 't' in the vector log
+        }
+        
+        report.push_back("-----------");
+        
+        return report;
+    
 }
 
-void Account:: report()
-{
-    std::cout<<"Your account balance currently:\t"<<balance;
+
+bool Account::deposit (int amt)
+{   if (amt >= 0)
+    {
+    balance += amt;
+    log.push_back(Transaction(amt, "Deposit"));
+    return true;
+    }
+    else
+    {
+        return false;
+    }
 }
+
+bool Account::withdraw (int amt)
+{
+    if(amt >= 0){
+        
+        if(balance > amt)
+        {
+            balance -= amt;
+            log.push_back(Transaction(amt, "Withdraw"));
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+       
+       else
+       {
+        return false;   
+       }
+        
+    }
+    
+}
+
